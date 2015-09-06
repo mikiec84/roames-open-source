@@ -1,0 +1,135 @@
+.pure-g > div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:link, a:visited {
+    color: #0084b4;
+    text-decoration: none;
+}
+
+.sidebar {
+  background: rgb(252, 252, 252);
+  color: #333;
+  border-right: 1px solid #F9D4BE;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: 25%;
+  background-image: url(simple.png);
+  background-repeat: repeat;
+}
+
+.header {
+  text-align: center;
+  top: auto;
+  margin: 3em auto;
+}
+
+.brand-title {
+  font-weight: normal;
+  margin-bottom: 8px;
+}
+
+.brand-tagline {
+  margin-top: 8px;
+  font-weight: 300;
+  font-size: 1.7em;
+  color: #666;
+}
+
+.stats {
+  margin: 2em 1em;
+}
+
+.stats p {
+  margin: 0.5em 1em;
+}
+
+.stats a:link, .stats a:visited {
+    color: inherit;
+}
+
+#repo-count, #member-count {
+  color: #4078c0;
+  font-weight: bold;
+}
+
+ol, ul {
+    list-style: none;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#repos li {
+  border: 1px solid #eee;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: 110px;
+  -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
+  -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
+  box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
+}
+
+.repo {
+  border-left: 6px solid #888;
+  height: 104px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: -1px;
+  margin-left: -1px;
+  display: block;
+  background-color: #FBF9F8;
+  position: relative;
+}
+
+a.repo h2 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 1.2em;
+}
+
+a.repo h3 {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 0.9em;
+  font-weight: 300;
+  color: #999;
+}
+
+a.repo p {
+  color: #666;
+  font-size: 1em;
+}
+
+.repo-stats {
+  color: #888;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  text-align: right;
+}
+
+.repo-stats span {
+  margin: auto 10px;
+}
+
+.repo-stats span::before {
+  padding-right: 4px;
+}
+
+.last-updated {
+  display: block;
+  padding-top: 10px;
+  font-size: 0.9em;
+}

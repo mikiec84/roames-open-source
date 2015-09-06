@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Fugro Roames Open Source</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="octicons/octicons.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="languages.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript">
+    (function ($, undefined) {
+
+      function cachedGithubRequest(url) {
+        return $.ajax({
+          dataType: "json",
+          url: url,
+          ifModified: true
+        });
+      };
+
+      var knownRepos = [];
+      var excludeRepos = [];
+
+      function addRepo(repo) {
+        if (knownRepos.indexOf(repo.name) === -1 && excludeRepos.indexOf(repo.name) === -1) {
+          var $repo = $("<a>").attr("href", repo.html_url).addClass("repo");
+          $repo.append($("<h2>").text(repo.name));
+          if (repo.language != null) {
+            $repo.addClass(repo.language.toLowerCase());
+            $repo.append($("<h3>").text(repo.language));
+          }
+          if (repo.description != null) {
+            $repo.append($("<p>").text(repo.description));
+          }
+          var $repoStats = $("<div>").addClass("repo-stats");
+          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-git-branch").text(repo.forks_count));
+          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-star").text(repo.stargazers_count));
+          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-issue-opened").text(repo.open_issues_count));
+          $repoStats.append($("<span>").addClass("last-updated").text("last updated: " + moment(repo.pushed_at).fromNow()));
+          $repo.append($repoStats);
+          var $item = $("<li>")
+          $item.append($repo);
+          $item.appendTo("#repos");
+          knownRepos.push(repo.name);
+          $("#repo-count").text(knownRepos.length);
+        }
+      };
+
+      function addRepos(type, id) {
+        var url = "https://api.github.com/" + type + "/" + id + "/repos?per_page=100";
+        cachedGithubRequest(url).done(function (repos) {
+          var numRepos = repos.length;
+          for (var i = 0; i < numRepos; i++) {
+            var repo = repos[i];
+            addRepo(repo);
+          }
+        });
+      };
+      addRepos("orgs", "fugroroames");
+
+      function addMember(member) {
+        var $item = $("<li>").addClass("member");
+        var $name = $("<a>").attr("href", member.html_url).text(member.login);
+        $item.append($("<span>").addClass("name").append($name));
+        $item.appendTo("#members");
+      };
+
+      cachedGithubRequest("https://api.github.com/orgs/fugroroames/public_members?per_page=100").done(function (members) {
+        var numMembers = members.length;
+        // for (var i = 0; i < numMembers; i++) {
+        //   var member = members[i];
+        //   // addMember(member);
+        //   addRepos("users", member.login);
+        // }
+
+        $("#member-count").text(numMembers);
+      });
+    })(jQuery);
+    </script>
+  </head>
+  <body>
+    <div id="layout" class="pure-g">
+      <div class="sidebar pure-u-md-1-4">
+        <div class="header">
+          <a href="http://roames.fugro.com/"><img src="logo_square.png"></a>
+          <h1 class="brand-title">Fugro Roames</h1>
+          <h2 class="brand-tagline">Open Source</h2>
+        </div>
+        <div class="stats">
+          <p><a href="https://github.com/FugroRoames/repositories"><span id="repo-count"></span> repositories</a></p>
+          <p><a href="https://github.com/FugroRoames?tab=members"><span id="member-count"></span> members</a></p>
+        </div>
+      </div>
+      <div class="content pure-u-md-3-4">
+        <ol id="members"></ol>
+        <ol id="repos"></ol>
+      </div>
+    </div>
+  </body>
+</html>
+
