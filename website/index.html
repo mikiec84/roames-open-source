@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <title>Fugro Roames Open Source</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="octicons/octicons.css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="vendor/octicons/octicons.css">
+    <link rel="stylesheet" href="vendor/pure/pure-min.css">
     <!--[if lte IE 8]>
-      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+      <link rel="stylesheet" href="vendor/pure/grids-responsive-old-ie-min.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+      <link rel="stylesheet" href="vendor/pure/grids-responsive-min.css">
     <!--<![endif]-->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="languages.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/moment.min.js"></script>
     <script type="text/javascript">
     (function ($, undefined) {
-
       function cachedGithubRequest(url) {
         return $.ajax({
           dataType: "json",
@@ -27,61 +24,111 @@
         });
       };
 
-      var knownRepos = [];
-      var excludeRepos = [];
-
-      function addRepo(repo) {
-        if (knownRepos.indexOf(repo.name) === -1 && excludeRepos.indexOf(repo.name) === -1) {
-          var $repo = $("<a>").attr("href", repo.html_url).addClass("repo");
-          $repo.append($("<h2>").text(repo.name));
-          if (repo.language != null) {
-            $repo.addClass(repo.language.toLowerCase());
-            $repo.append($("<h3>").text(repo.language));
-          }
-          if (repo.description != null) {
-            $repo.append($("<p>").text(repo.description));
-          }
-          var $repoStats = $("<div>").addClass("repo-stats");
-          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-git-branch").text(repo.forks_count));
-          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-star").text(repo.stargazers_count));
-          $repoStats.append($("<span>").addClass("octicon").addClass("octicon-issue-opened").text(repo.open_issues_count));
-          $repoStats.append($("<span>").addClass("last-updated").text("last updated: " + moment(repo.pushed_at).fromNow()));
-          $repo.append($repoStats);
-          var $item = $("<li>")
-          $item.append($repo);
-          $item.appendTo("#repos");
-          knownRepos.push(repo.name);
-          $("#repo-count").text(knownRepos.length);
+      function computeCommitsStats(commits) {
+        var stats = {additions: 0, deletions: 0};
+        for (var i = 0; i < commits.length; i++) {
+          stats.additions += commits[i].insertions;
+          stats.deletions += commits[i].deletions;
         }
+        return stats;
       };
 
-      function addRepos(type, id) {
-        var url = "https://api.github.com/" + type + "/" + id + "/repos?per_page=100";
-        cachedGithubRequest(url).done(function (repos) {
-          var numRepos = repos.length;
-          for (var i = 0; i < numRepos; i++) {
-            var repo = repos[i];
-            addRepo(repo);
+      function createRepoStatsElement(repo) {
+        var $repoStats = $("<div>").addClass("repo-stats");
+        $repoStats.append($("<span>").addClass("octicon").addClass("octicon-git-branch").text(repo.forks_count));
+        $repoStats.append($("<span>").addClass("octicon").addClass("octicon-star").text(repo.stargazers_count));
+        $repoStats.append($("<span>").addClass("octicon").addClass("octicon-issue-opened").text(repo.open_issues_count));
+        return $repoStats;
+      };
+
+      var currentField = null;
+      var currentOrder = 1; // ascending order
+      function sortingHandler(event) {
+        var field = event.data.field;
+        if (currentField === null || currentField !== field) {
+          currentField = field;
+          currentOrder = 1;
+        } else {
+          currentOrder *= -1;
+        }
+
+        var $reposContainer = $("#repos"),
+        $repos = $reposContainer.children('li');
+        $repos.detach().sort(function(a,b){
+          if (currentOrder > 0) {
+            return $(a).data(field) > $(b).data(field);
+          } else {
+            return $(a).data(field) < $(b).data(field);
           }
         });
+        $repos.appendTo($reposContainer);
       };
-      addRepos("orgs", "fugroroames");
 
-      function addMember(member) {
-        var $item = $("<li>").addClass("member");
-        var $name = $("<a>").attr("href", member.html_url).text(member.login);
-        $item.append($("<span>").addClass("name").append($name));
-        $item.appendTo("#members");
+      function createSortableElement(text, field) {
+        var $el = $("<a>").attr("href", "#").attr("data-tooltip", "Order by " + field).text(text);
+        $el.click({field: field}, sortingHandler);
+        return $el;
       };
+
+      function addRepo(repo) {
+        var $repo = $("<a>").attr("id", repo.name).attr("href", repo.html_url).addClass("repo");
+        $repo.append($("<h2>").text(repo.name));
+
+        if (repo.language != null) {
+          $repo.addClass(repo.language.toLowerCase().replace(/\+/g, "p"));
+          $repo.append($("<h3>").text(repo.language));
+        }
+
+        if (repo.description != null) {
+          $repo.append($("<p>").text(repo.description));
+        }
+
+        $repo.append(createRepoStatsElement(repo));
+
+        var commitsStats = computeCommitsStats(repo.commits);
+        var $roamesStats = $("<div>").addClass("roames-stats");
+        $roamesStats.append($("<p>").text("Roames Contributions"));
+        $roamesStats.append($("<span>")
+                              .append(createSortableElement("commits: " + repo.commits.length, "commits"))
+                              .append(" - ")
+                              .append(createSortableElement("additions: " + commitsStats.additions, "additions"))
+                              .append(" - ")
+                              .append(createSortableElement("deletions: " + commitsStats.deletions, "deletions")));
+        var lastCommit = moment(repo.commits[0].date).fromNow();
+        $roamesStats.append($("<span>")
+                             .append(createSortableElement("last commit: " + lastCommit, "last-commit")));
+        $repo.append($roamesStats);
+
+        var $item = $("<li>");
+        $item.attr("data-last-commit", repo.commits[0].date)
+             .attr("data-commits", repo.commits.length)
+             .attr("data-additions", commitsStats.additions)
+             .attr("data-deletions", commitsStats.deletions);
+        $item.appendTo("#repos");
+        $item.append($repo);
+      };
+
+      function retrieveRepoList() {
+        $.getJSON("repo_list.json")
+          .done(function (repos) {
+            $("#repo-count").text(repos.length);
+            for (var i = 0; i < repos.length; i++) {
+              var githubRequest = cachedGithubRequest("https://api.github.com/repos/" + repos[i].full_name);
+              var commitsRequest = $.getJSON(repos[i].label + ".json");
+
+              $.when(githubRequest, commitsRequest)
+                .done(function (githubResponse, commistResponse) {
+                  var repo = githubResponse[0];
+                  repo.commits = commistResponse[0];
+                  addRepo(repo);
+                });
+            }
+          });
+      };
+      retrieveRepoList();
 
       cachedGithubRequest("https://api.github.com/orgs/fugroroames/public_members?per_page=100").done(function (members) {
         var numMembers = members.length;
-        // for (var i = 0; i < numMembers; i++) {
-        //   var member = members[i];
-        //   // addMember(member);
-        //   addRepos("users", member.login);
-        // }
-
         $("#member-count").text(numMembers);
       });
     })(jQuery);
@@ -107,4 +154,3 @@
     </div>
   </body>
 </html>
-

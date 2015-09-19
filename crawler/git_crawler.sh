@@ -7,7 +7,7 @@ if [ -n "$REPO_LIST_URL" ]; then
     curl $REPO_LIST_URL | jq -r '.[] | .label + " https://github.com/" + .full_name + ".git"' > flat_list.txt
 elif [ -n "$REPO_LIST_PATH" ]; then
     echo "Reading list of repositories"
-    jq -r '.[] | .label + " https://github.com/" + .full_name + ".git"' $REPO_PATH_LIST > flat_list.txt
+    jq -r '.[] | .label + " https://github.com/" + .full_name + ".git"' $REPO_LIST_PATH > flat_list.txt
 else
     echo -e "Need to set either REPO_LIST_URL or REPO_LIST_PATH"
     exit 1

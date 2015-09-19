@@ -73,7 +73,7 @@ ol, ul {
   border: 1px solid #eee;
   margin-top: 1em;
   margin-bottom: 1em;
-  height: 110px;
+  height: 130px;
   -webkit-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
   -moz-box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
   box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.07);
@@ -81,7 +81,7 @@ ol, ul {
 
 .repo {
   border-left: 6px solid #888;
-  height: 104px;
+  height: 124px;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 8px;
@@ -128,8 +128,896 @@ a.repo p {
   padding-right: 4px;
 }
 
-.last-updated {
+.roames-stats {
+  color: #888;
+  position: absolute;
+  top: 45px;
+  right: 20px;
+  text-align: right;
+}
+
+.roames-stats span {
+  margin: auto 10px;
   display: block;
   padding-top: 10px;
   font-size: 0.9em;
 }
+
+.roames-stats p {
+  margin: auto 10px;
+  display: block;
+  padding-top: 10px;
+  font-size: 5em;
+}
+
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 140px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* languages style */
+.ags-script {
+  border-color: #B9D9FF;
+}
+
+.antlr {
+  border-color: #9DC3FF;
+}
+
+.apl {
+  border-color: #8a0707;
+}
+
+.asp {
+  border-color: #6a40fd;
+}
+
+.ats {
+  border-color: #1ac620;
+}
+
+.actionscript {
+  border-color: #e3491a;
+}
+
+.ada {
+  border-color: #02f88c;
+}
+
+.agda {
+  border-color: #467C91;
+}
+
+
+.alloy {
+  border-color: #cc5c24;
+}
+
+
+.arc {
+  border-color: #ca2afe;
+}
+
+
+.arduino {
+  border-color: #bd79d1;
+}
+
+
+.aspectj {
+  border-color: #1957b0;
+}
+
+
+.assembly {
+  border-color: #a67219;
+}
+
+
+.autohotkey {
+  border-color: #6594b9;
+}
+
+
+.autoit {
+  border-color: #36699B;
+}
+
+
+.blitzmax {
+  border-color: #cd6400;
+}
+
+
+.boo {
+  border-color: #d4bec1;
+}
+
+
+.c {
+  border-color: #555;
+}
+
+
+.c {
+  border-color: #178600;
+}
+
+
+.cpp {
+  border-color: #f34b7d;
+}
+
+
+.css {
+  border-color: #563d7c;
+}
+
+
+.chapel {
+  border-color: #8dc63f;
+}
+
+
+.cirru {
+  border-color: #aaaaff;
+}
+
+
+.clean {
+  border-color: #3a81ad;
+}
+
+
+.clojure {
+  border-color: #db5855;
+}
+
+
+.coffeescript {
+  border-color: #244776;
+}
+
+
+.coldfusion {
+  border-color: #ed2cd6;
+}
+
+
+.coldfusion-cfc {
+  border-color: #ed2cd6;
+}
+
+
+.common-lisp {
+  border-color: #3fb68b;
+}
+
+
+.component-pascal {
+  border-color: #b0ce4e;
+}
+
+
+.d {
+  border-color: #fcd46d;
+}
+
+
+.dm {
+  border-color: #075ff1;
+}
+
+
+.dart {
+  border-color: #98BAD6;
+}
+
+
+.dogescript {
+  border-color: #cca760;
+}
+
+
+.dylan {
+  border-color: #3ebc27;
+}
+
+
+.e {
+  border-color: #ccce35;
+}
+
+
+.ecl {
+  border-color: #8a1267;
+}
+
+
+.eagle {
+  border-color: #3994bc;
+}
+
+
+.eiffel {
+  border-color: #946d57;
+}
+
+
+.elixir {
+  border-color: #6e4a7e;
+}
+
+
+.elm {
+  border-color: #60B5CC;
+}
+
+
+.emacs-lisp {
+  border-color: #c065db;
+}
+
+
+.emberscript {
+  border-color: #f64e3e;
+}
+
+
+.erlang {
+  border-color: #0faf8d;
+}
+
+
+.f {
+  border-color: #b845fc;
+}
+
+
+.flux {
+  border-color: #33CCFF;
+}
+
+
+.fortran {
+  border-color: #4d41b1;
+}
+
+
+.factor {
+  border-color: #636746;
+}
+
+
+.fancy {
+  border-color: #7b9db4;
+}
+
+
+.fantom {
+  border-color: #dbded5;
+}
+
+
+.forth {
+  border-color: #341708;
+}
+
+
+.frege {
+  border-color: #00cafe;
+}
+
+
+.game-maker-language {
+  border-color: #8ad353;
+}
+
+
+.glyph {
+  border-color: #e4cc98;
+}
+
+
+.gnuplot {
+  border-color: #f0a9f0;
+}
+
+
+.go {
+  border-color: #375eab;
+}
+
+
+.golo {
+  border-color: #f6a51f;
+}
+
+
+.gosu {
+  border-color: #82937f;
+}
+
+
+.grammatical-framework {
+  border-color: #ff0000;
+}
+
+
+.groovy {
+  border-color: #e69f56;
+}
+
+
+.harbour {
+  border-color: #0e60e3;
+}
+
+
+.haskell {
+  border-color: #29b544;
+}
+
+
+.haxe {
+  border-color: #f7941e;
+}
+
+
+.hy {
+  border-color: #7891b1;
+}
+
+
+.idl {
+  border-color: #e3592c;
+}
+
+
+.io {
+  border-color: #a9188d;
+}
+
+
+.ioke {
+  border-color: #078193;
+}
+
+
+.isabelle {
+  border-color: #fdcd00;
+}
+
+
+.java {
+  border-color: #b07219;
+}
+
+
+.javascript {
+  border-color: #f1e05a;
+}
+
+
+.julia {
+  border-color: #a270ba;
+}
+
+
+.krl {
+  border-color: #f5c800;
+}
+
+
+.lfe {
+  border-color: #004200;
+}
+
+
+.lolcode {
+  border-color: #cc9900;
+}
+
+
+.lsl {
+  border-color: #3d9970;
+}
+
+
+.lasso {
+  border-color: #2584c3;
+}
+
+
+.latte {
+  border-color: #A8FF97;
+}
+
+
+.livescript {
+  border-color: #499886;
+}
+
+
+.lookml {
+  border-color: #652B81;
+}
+
+
+.lua {
+  border-color: #fa1fa1;
+}
+
+
+.mtml {
+  border-color: #0095d9;
+}
+
+
+.mask {
+  border-color: #f97732;
+}
+
+
+.matlab {
+  border-color: #bb92ac;
+}
+
+
+.max {
+  border-color: #ce279c;
+}
+
+
+.mercury {
+  border-color: #abcdef;
+}
+
+
+.mirah {
+  border-color: #c7a938;
+}
+
+
+.nemerle {
+  border-color: #0d3c6e;
+}
+
+
+.netlogo {
+  border-color: #ff2b2b;
+}
+
+
+.nimrod {
+  border-color: #37775b;
+}
+
+
+.nit {
+  border-color: #0d8921;
+}
+
+
+.nix {
+  border-color: #7070ff;
+}
+
+
+.nu {
+  border-color: #c9df40;
+}
+
+
+.ocaml {
+  border-color: #3be133;
+}
+
+
+.objective-c {
+  border-color: #438eff;
+}
+
+
+.objective-cpp {
+  border-color: #4886FC;
+}
+
+
+.objective-j {
+  border-color: #ff0c5a;
+}
+
+
+.omgrofl {
+  border-color: #cabbff;
+}
+
+
+.opal {
+  border-color: #f7ede0;
+}
+
+
+.oxygene {
+  border-color: #5a63a3;
+}
+
+
+.oz {
+  border-color: #fcaf3e;
+}
+
+
+.pawn {
+  border-color: #dbb284;
+}
+
+
+.php {
+  border-color: #4F5D95;
+}
+
+
+.pan {
+  border-color: #cc0000;
+}
+
+
+.papyrus {
+  border-color: #6600cc;
+}
+
+
+.parrot {
+  border-color: #f3ca0a;
+}
+
+
+.pascal {
+  border-color: #b0ce4e;
+}
+
+
+.perl {
+  border-color: #0298c3;
+}
+
+
+.perl6 {
+  border-color: #0298c3;
+}
+
+
+.piglatin {
+  border-color: #fcd7de;
+}
+
+
+.pike {
+  border-color: #066ab2;
+}
+
+
+.pogoscript {
+  border-color: #d80074;
+}
+
+
+.processing {
+  border-color: #2779ab;
+}
+
+
+.prolog {
+  border-color: #74283c;
+}
+
+
+.propeller-spin {
+  border-color: #2b446d;
+}
+
+
+.puppet {
+  border-color: #cc5555;
+}
+
+
+.pure-data {
+  border-color: #91de79;
+}
+
+
+.purebasic {
+  border-color: #5a6986;
+}
+
+
+.purescript {
+  border-color: #bcdc53;
+}
+
+
+.python {
+  border-color: #3581ba;
+}
+
+
+.qml {
+  border-color: #44a51c;
+}
+
+
+.r {
+  border-color: #198ce7;
+}
+
+
+.raml {
+  border-color: #77d9fb;
+}
+
+
+.racket {
+  border-color: #ae17ff;
+}
+
+
+.ragel-in-ruby-host {
+  border-color: #ff9c2e;
+}
+
+
+.rebol {
+  border-color: #358a5b;
+}
+
+
+.red {
+  border-color: #ee0000;
+}
+
+
+.rouge {
+  border-color: #cc0088;
+}
+
+
+.ruby {
+  border-color: #701516;
+}
+
+
+.rust {
+  border-color: #dea584;
+}
+
+
+.sas {
+  border-color: #1E90FF;
+}
+
+
+.sqf {
+  border-color: #FFCB1F;
+}
+
+
+.scala {
+  border-color: #7dd3b0;
+}
+
+
+.scheme {
+  border-color: #1e4aec;
+}
+
+
+.self {
+  border-color: #0579aa;
+}
+
+
+.shell {
+  border-color: #89e051;
+}
+
+
+.shen {
+  border-color: #120F14;
+}
+
+
+.slash {
+  border-color: #007eff;
+}
+
+
+.slim {
+  border-color: #ff8877;
+}
+
+
+.smalltalk {
+  border-color: #596706;
+}
+
+
+.sourcepawn {
+  border-color: #f69e1d;
+}
+
+
+.standard-ml {
+  border-color: #dc566d;
+}
+
+
+.supercollider {
+  border-color: #46390b;
+}
+
+
+.swift {
+  border-color: #ffac45;
+}
+
+
+.systemverilog {
+  border-color: #343761;
+}
+
+
+.tcl {
+  border-color: #e4cc98;
+}
+
+
+.tex {
+  border-color: #3D6117;
+}
+
+
+.turing {
+  border-color: #45f715;
+}
+
+
+.typescript {
+  border-color: #31859c;
+}
+
+
+.unified-parallel-c {
+  border-color: #755223;
+}
+
+
+.unrealscript {
+  border-color: #a54c4d;
+}
+
+
+.vcl {
+  border-color: #0298c3;
+}
+
+
+.vhdl {
+  border-color: #543978;
+}
+
+
+.vala {
+  border-color: #ee7d06;
+}
+
+
+.verilog {
+  border-color: #848bf3;
+}
+
+
+.viml {
+  border-color: #199c4b;
+}
+
+
+.visual-basic {
+  border-color: #945db7;
+}
+
+
+.volt {
+  border-color: #0098db;
+}
+
+
+.xquery {
+  border-color: #2700e2;
+}
+
+
+.zephir {
+  border-color: #118f9e;
+}
+
+
+.edn {
+  border-color: #db5855;
+}
+
+
+.nesc {
+  border-color: #ffce3b;
+}
+
+
+.ooc {
+  border-color: #b0b77e;
+}
+
+
+.wisp {
+  border-color: #7582D1;
+}
+
+
+.xbase {
+  border-color: #3a4040;
+}
+

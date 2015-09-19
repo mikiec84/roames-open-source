@@ -12,7 +12,7 @@ RUN pip install awscli
 
 RUN mkdir -p /data
 WORKDIR /data
-COPY git_stats.sh /data/git_stats.sh
+COPY git_crawler.sh /data/git_crawler.sh
 COPY stream.py /data/stream.py
 
-CMD /data/git_stats.sh
+CMD /data/git_crawler.sh
