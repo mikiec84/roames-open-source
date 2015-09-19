@@ -1,7 +1,7 @@
-.pure-g > div {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
 }
 
 a:link, a:visited {
@@ -24,6 +24,7 @@ a:link, a:visited {
   top: 0;
   bottom: 0;
   margin-left: 25%;
+  width: 75%;
   background-image: url(simple.png);
   background-repeat: repeat;
 }

@@ -4,13 +4,6 @@
     <title>Fugro Roames Open Source</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="vendor/octicons/octicons.css">
-    <link rel="stylesheet" href="vendor/pure/pure-min.css">
-    <!--[if lte IE 8]>
-      <link rel="stylesheet" href="vendor/pure/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-      <link rel="stylesheet" href="vendor/pure/grids-responsive-min.css">
-    <!--<![endif]-->
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="vendor/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/moment.min.js"></script>
@@ -131,8 +124,8 @@
     </script>
   </head>
   <body>
-    <div id="layout" class="pure-g">
-      <div class="sidebar pure-u-md-1-4">
+    <div id="layout">
+      <div class="sidebar">
         <div class="header">
           <a href="http://roames.fugro.com/"><img src="logo_square.png"></a>
           <h1 class="brand-title">Fugro Roames</h1>
@@ -143,7 +136,7 @@
           <p><a href="https://github.com/FugroRoames?tab=members"><span id="member-count"></span> members</a></p>
         </div>
       </div>
-      <div class="content pure-u-md-3-4">
+      <div class="content">
         <ol id="members"></ol>
         <ol id="repos"></ol>
       </div>
