@@ -52,14 +52,10 @@
           currentOrder *= -1;
         }
 
-        var $reposContainer = $("#repos"),
-        $repos = $reposContainer.children('li');
+        var $reposContainer = $("#repos");
+        var $repos = $reposContainer.children('li');
         $repos.detach().sort(function(a,b){
-          if (currentOrder > 0) {
-            return $(a).data(field) > $(b).data(field);
-          } else {
-            return $(a).data(field) < $(b).data(field);
-          }
+            return $(a).data(field) > $(b).data(field) ? currentOrder : -currentOrder;
         });
         $repos.appendTo($reposContainer);
       };
