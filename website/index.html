@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="vendor/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/moment.min.js"></script>
+  </head>
+  <body>
+    <div id="layout">
+      <div class="sidebar">
+        <div class="header">
+          <a href="http://roames.fugro.com/"><img src="logo_square.png"></a>
+          <h1 class="brand-title">Fugro Roames</h1>
+          <h2 class="brand-tagline">Open Source</h2>
+        </div>
+        <div class="stats">
+          <p><a href="https://github.com/FugroRoames/repositories"><span id="repo-count"></span> repositories</a></p>
+          <p><a href="https://github.com/FugroRoames?tab=members"><span id="member-count"></span> members</a></p>
+        </div>
+      </div>
+      <div class="content">
+        <div class="sort-pane">
+          <div style="float: right; margin-right: 20px;">
+            <span id="sort-label">sort by:</span>
+            <a id="sort-commits" href="#">commits<span class="octicon octicon-chevron-up sort-icon"></span><span class="octicon octicon-chevron-down sort-icon"></span></a>
+            <a id="sort-additions" href="#">additions<span class="octicon octicon-chevron-up sort-icon"></span><span class="octicon octicon-chevron-down sort-icon"></span></a>
+            <a id="sort-deletions" href="#">deletions<span class="octicon octicon-chevron-up sort-icon"></span><span class="octicon octicon-chevron-down sort-icon"></span></a>
+            <a id="sort-last-commit"href="#">last commit<span class="octicon octicon-chevron-up sort-icon"></span><span class="octicon octicon-chevron-down sort-icon"></span></a>
+          </div>
+        </div>
+        <ol id="members"></ol>
+        <ol id="repos"></ol>
+      </div>
+    </div>
     <script type="text/javascript">
     (function ($, undefined) {
       function cachedGithubRequest(url) {
@@ -51,12 +79,10 @@
             return $(a).data(field) > $(b).data(field) ? currentOrder : -currentOrder;
         });
         $repos.appendTo($reposContainer);
-      };
 
-      function createSortableElement(text, field) {
-        var $el = $("<a>").attr("href", "#").attr("data-tooltip", "Order by " + field).text(text);
-        $el.click({field: field}, sortingHandler);
-        return $el;
+        var chevronClass = currentOrder > 0 ? ".octicon-chevron-up" : ".octicon-chevron-down";
+        $("#chevron").toggle().removeAttr("id");
+        $("#sort-" + field).children(chevronClass).attr("id", "chevron").toggle();
       };
 
       function addRepo(repo) {
@@ -78,14 +104,13 @@
         var $roamesStats = $("<div>").addClass("roames-stats");
         $roamesStats.append($("<p>").text("Roames Contributions"));
         $roamesStats.append($("<span>")
-                              .append(createSortableElement("commits: " + repo.commits.length, "commits"))
-                              .append(" - ")
-                              .append(createSortableElement("additions: " + commitsStats.additions, "additions"))
-                              .append(" - ")
-                              .append(createSortableElement("deletions: " + commitsStats.deletions, "deletions")));
+                              .append($("<p>").text("commits: " + repo.commits.length))
+                              .append("-")
+                              .append($("<p>").text("additions: " + commitsStats.additions))
+                              .append("-")
+                              .append($("<p>").text("deletions: " + commitsStats.deletions)));
         var lastCommit = moment(repo.commits[0].date).fromNow();
-        $roamesStats.append($("<span>")
-                             .append(createSortableElement("last commit: " + lastCommit, "last-commit")));
+        $roamesStats.append($("<span>").append($("<p>").text("last commit: " + lastCommit)));
         $repo.append($roamesStats);
 
         var $item = $("<li>");
@@ -120,26 +145,12 @@
         var numMembers = members.length;
         $("#member-count").text(numMembers);
       });
+
+      $("#sort-commits").click({field: "commits"}, sortingHandler);
+      $("#sort-additions").click({field: "additions"}, sortingHandler);
+      $("#sort-deletions").click({field: "deletions"}, sortingHandler);
+      $("#sort-last-commit").click({field: "last-commit"}, sortingHandler);
     })(jQuery);
     </script>
-  </head>
-  <body>
-    <div id="layout">
-      <div class="sidebar">
-        <div class="header">
-          <a href="http://roames.fugro.com/"><img src="logo_square.png"></a>
-          <h1 class="brand-title">Fugro Roames</h1>
-          <h2 class="brand-tagline">Open Source</h2>
-        </div>
-        <div class="stats">
-          <p><a href="https://github.com/FugroRoames/repositories"><span id="repo-count"></span> repositories</a></p>
-          <p><a href="https://github.com/FugroRoames?tab=members"><span id="member-count"></span> members</a></p>
-        </div>
-      </div>
-      <div class="content">
-        <ol id="members"></ol>
-        <ol id="repos"></ol>
-      </div>
-    </div>
   </body>
 </html>
